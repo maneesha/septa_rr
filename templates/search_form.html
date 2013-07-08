@@ -1,0 +1,136 @@
+<html>
+<head>
+<title>Search</title>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+
+
+
+</head>
+
+<body>
+
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+
+<script>
+$(function() {
+    var availStations = 
+        ['Chestnut H East',
+         'Mt Airy',
+         'Chestnut H West',
+         'Allen Lane',
+         'Stenton',
+         'Bridesburg',
+	 'Paoli',
+	 'Jenkintown',
+	 'Airport',
+	 'Bristol',
+	 'Wayne Junction',
+	 'Germantown',
+	 'Yardley',
+	 'Bethayres',
+	 'West Trenton',
+	 'Somerton',
+	 '30th Street Station'];
+    
+    $(".stations").autocomplete({
+        source: availStations
+    });
+});
+</script>
+
+
+<br>
+
+
+
+
+<form action = "/search/" method = "get">
+   
+<div class = "ui-widget">
+<label for="stations">Search for: </label>
+    <input type = "text" name ="q" class="stations">
+
+    in:    
+    <select name = "w">
+        <option value="source">Source</option>
+        <option value="destination">Destination</option>
+        <option value = "nextstop">Next Stop</option>
+        <option value = "late">Late</option>
+        <option value = "trainno">Train Number</option>
+    </select>
+
+    <select name = "x">
+        <option value="__icontains">contains</option>
+        <option value="__istartswith">starts with</option>
+        <option value="__gt">greater than</option>
+        <option value="__lt">less than</option>
+    </select>
+
+    <br>
+    AND
+    <br>
+    <input type = "text" name ="a" class="stations">
+    in:    
+    <select name = "b">
+        <option value="source">Source</option>
+        <option value="destination">Destination</option>
+        <option value = "nextstop">Next Stop</option>
+        <option value = "late">Late</option>
+        <option value = "trainno">Train Number</option>
+    </select>
+
+    <select name = "c">
+        <option value="__icontains">contains</option>
+        <option value="__istartswith">starts with</option>
+        <option value="__gt">greater than</option>
+        <option value="__lt">less than</option>
+    </select>
+
+    <br>
+
+    <input type = "submit" value="Search">
+</div>
+
+</form>
+
+<div class = "ui-widget">
+
+<br>
+<br>
+<hr>
+<br>
+
+What is the latest your train has ever been?
+<form action = "/search/" method = "get">
+
+Search for 
+<input type = "text" name = "zz">
+in train number
+ </div>
+<input type = "submit" value = "search">
+NOTE: This is a non-functional search form for testing purposes only.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</form>
+
+
+
+
+
+</body>
+</html>
+
+

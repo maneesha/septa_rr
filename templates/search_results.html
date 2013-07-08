@@ -1,0 +1,29 @@
+<p> You searched for the term <strong>{{ query1 }}</strong> in the field <strong>{{ field1 }}</strong>, using the filter <strong>{{ filter1 }}</strong>.
+
+
+{% if query2 %}
+AND
+<strong>{{ query2 }}</strong> in the field  {{ field2 }} using the filter {{ filter2 }}. 
+{% endif %}
+
+
+
+
+{% if trains %}
+
+    <p> Found {{ trains|length }} train{{ trains|pluralize }}.</p>
+    <ul>
+        {% for train in trains %}
+            <li>  The train from  {{ train.source }},
+
+
+ going to {{ train.destination }} on {{ train.scraped_date }} at {{ train.scraped_time }} was {{ train.late }} minutes late when it was approaching {{ train.nextstop }}.</li> 
+
+        {% endfor %}
+    </ul>
+
+{% else %}
+    <p>No trains found that match your search.</p>
+{% endif %}
+
+

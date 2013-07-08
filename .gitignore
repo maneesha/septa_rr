@@ -1,0 +1,5 @@
+/septa_pg/settings.py
+
+**/*.pyc
+**/*.py~
+**/*.html~
