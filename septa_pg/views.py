@@ -43,7 +43,8 @@ def search(request):
         zz = request.GET['zz']
         trainno_filter = Trains.objects.filter(trainno__exact=zz)
         latest_train = trainno_filter.aggregate(Max('late'))
-        return render(request, 'late_results.html', {'latest_train':latest_train, 'trainno':zz})
+        lt = latest_train['late__max']
+        return render(request, 'late_results.html', {'latest_train':latest_train, 'lt':lt, 'trainno':zz})
     else:
         return HttpResponse("Please submit a search term") #suggestion: bring this to top so it doesn't get lost 
 
