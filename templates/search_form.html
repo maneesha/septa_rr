@@ -3,47 +3,15 @@
 <title>Search</title>
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
 
-
-
 </head>
 
 <body>
 
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-
-<script>
-$(function() {
-    var availStations = 
-        ['Chestnut H East',
-         'Mt Airy',
-         'Chestnut H West',
-         'Allen Lane',
-         'Stenton',
-         'Bridesburg',
-	 'Paoli',
-	 'Jenkintown',
-	 'Airport',
-	 'Bristol',
-	 'Wayne Junction',
-	 'Germantown',
-	 'Yardley',
-	 'Bethayres',
-	 'West Trenton',
-	 'Somerton',
-	 '30th Street Station'];
-    
-    $(".stations").autocomplete({
-        source: availStations
-    });
-});
-</script>
-
+  <script src="/static/septa_search.js"></script>
 
 <br>
-
-
-
 
 <form action = "/search/" method = "get">
    

@@ -33,7 +33,7 @@ def search(request):
         if a:
             kwargs[query2]  = a
         trains = Trains.objects.filter(**kwargs)
-        #__icontains and __istartswith are case-insensitive      
+        #__icontains and __istartswith are case-insensitive (compare to _contains & _startswith) 
         plain_english = {'__icontains':'contains', '__gt':'greater than', '__lt':'less than', '__istartswith':'starts with'}        
         return render(request, 'search_results.html', {'trains':trains, 'query1':q, 'field1':w, 'filter1':plain_english[x], 'query2':a, 'field2':b, 'filter2':plain_english[c]})
     elif 'zz' in request.GET and request.GET['zz']:
