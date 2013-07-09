@@ -1,0 +1,14 @@
+You searched for the term {{ trainno }}
+<p>
+This is the late_results.html template.
+<p>
+{% if latest_train %}
+Found trains
+The latest that train number {{ trainno }} ran during this time period was {{ latest_train }}
+
+
+
+
+{% else %}
+Found no trains
+{% endif %}

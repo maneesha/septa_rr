@@ -3,12 +3,14 @@ from django.http import HttpResponse
 from django.shortcuts import render
 #from django.template import Context
 from regional_rail.models import Trains
+from django.db.models import Max
 
 def search_form(request):
     return render(request, 'search_form.html')
 
 def search_x(request):
     #to have only one search term & hard-coded filter
+    #as an example only - not used in this project/app
     if 'q' in request.GET and request.GET['q']:
         q = request.GET['q']
         trains = Trains.objects.filter(source__icontains=q)
@@ -37,9 +39,11 @@ def search(request):
         plain_english = {'__icontains':'contains', '__gt':'greater than', '__lt':'less than', '__istartswith':'starts with'}        
         return render(request, 'search_results.html', {'trains':trains, 'query1':q, 'field1':w, 'filter1':plain_english[x], 'query2':a, 'field2':b, 'filter2':plain_english[c]})
     elif 'zz' in request.GET and request.GET['zz']:
-        return HttpResponse("You searched for: %r" % request.GET['zz'])
-
-
+        #return HttpResponse("You searched for: %r" % request.GET['zz'])
+        zz = request.GET['zz']
+        trainno_filter = Trains.objects.filter(trainno__exact=zz)
+        latest_train = trainno_filter.aggregate(Max('late'))
+        return render(request, 'late_results.html', {'latest_train':latest_train, 'trainno':zz})
     else:
         return HttpResponse("Please submit a search term") #suggestion: bring this to top so it doesn't get lost 
 

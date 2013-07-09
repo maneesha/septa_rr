@@ -14,7 +14,7 @@ AND
     <p> Found {{ trains|length }} train{{ trains|pluralize }}.</p>
     <ul>
         {% for train in trains %}
-            <li>  The train from  {{ train.source }},
+            <li>  Train number {{ train.trainno }} from  {{ train.source }},
 
 
  going to {{ train.destination }} on {{ train.scraped_date }} at {{ train.scraped_time }} was {{ train.late }} minutes late when it was approaching {{ train.nextstop }}.</li> 
