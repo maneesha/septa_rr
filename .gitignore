@@ -5,3 +5,5 @@
 **/*.html~
 
 todo.txt
+
+data/*.*
