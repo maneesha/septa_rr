@@ -45,6 +45,15 @@ def search(request):
         latest_train = trainno_filter.aggregate(Max('late'))
         lt = latest_train['late__max']
         return render(request, 'late_results.html', {'latest_train':latest_train, 'lt':lt, 'trainno':zz})
+    #testing passing date submission
+    elif 'start_date' in request.GET and request.GET['start_date']:
+        start_date = request.GET['start_date']
+        end_date = request.GET['end_date']
+        if start_date < end_date:
+            message = "You searched for the start date " + start_date + " and the end date " + end_date
+        else:
+            message = "End date must be after start date."
+        return HttpResponse(message)
     else:
         return HttpResponse("Please submit a search term") #suggestion: bring this to top so it doesn't get lost 
 
