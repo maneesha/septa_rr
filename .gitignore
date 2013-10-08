@@ -1,6 +1,4 @@
 /septa_pg/settings.py
-/scraper/error_log.txt
-/scraper/my_settings.py
 
 **/*.pyc
 **/*.py~
@@ -9,3 +7,6 @@
 todo.txt
 
 data/*.*
+
+about.txt
+
