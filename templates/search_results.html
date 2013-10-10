@@ -1,3 +1,14 @@
+<html>
+
+<head>
+<link rel = "stylesheet" type = "text/css" href = "/static/styling.css">
+
+</head>
+
+
+
+<body>
+
 <p> You searched for the term <strong>{{ query1 }}</strong> in the field <strong>{{ field1 }}</strong>, using the filter <strong>{{ filter1 }}</strong>.
 
 
@@ -6,6 +17,7 @@ AND
 <strong>{{ query2 }}</strong> in the field  {{ field2 }} using the filter {{ filter2 }}. 
 {% endif %}
 
+<a href = '/search-form'>Return to search page</a>
 
 
 
@@ -17,7 +29,7 @@ AND
             <li>  Train number {{ train.trainno }} from  {{ train.source }},
 
 
- going to {{ train.destination }} on {{ train.scraped_date }} at {{ train.scraped_time }} was {{ train.late }} minutes late when it was approaching {{ train.nextstop }}.</li> 
+ going to {{ train.destination }} on {{ train.date_and_time }} was {{ train.late }} minutes late when it was approaching {{ train.nextstop }}.  </li> 
 
         {% endfor %}
     </ul>
@@ -26,4 +38,5 @@ AND
     <p>No trains found that match your search.</p>
 {% endif %}
 
-
+</body>
+</html>

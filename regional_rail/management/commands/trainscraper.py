@@ -5,6 +5,7 @@ from django.core.management.base import BaseCommand, CommandError
 from regional_rail.models import Trains
 import urllib2
 from datetime import date, datetime, time
+from django.utils.timezone import utc
 import json
 
 class Command(BaseCommand):
@@ -19,11 +20,15 @@ class Command(BaseCommand):
         #get the scraped date & time since that's not part of the json feed
         scraped_date = str(datetime.date(datetime.now())) 
         scraped_time = str(datetime.time(datetime.now()))
-        
+        d_and_t = datetime.utcnow().replace(tzinfo=utc)
+        print d_and_t
+
+
         for train in current_trains:
             #complete the data set by adding date / time 
             train["scraped_date"] = scraped_date
             train["scraped_time"] = scraped_time
+            train["date_and_time"] = d_and_t
 
             #scrapedtrain is based on the Trains model defined in models.py    
             #scraped train is an object based on class regional_rail.models.Trains
@@ -41,6 +46,7 @@ class Command(BaseCommand):
             scrapedtrain.nextstop = train["nextstop"]
             scrapedtrain.scraped_time = train["scraped_time"]
             scrapedtrain.scraped_date = train["scraped_date"]
+            scrapedtrain.date_and_time = train["date_and_time"]
 
             #Saves to database as defined in django settings
             scrapedtrain.save()
