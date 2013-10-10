@@ -29,7 +29,7 @@ AND
             <li>  Train number {{ train.trainno }} from  {{ train.source }},
 
 
- going to {{ train.destination }} on {{ train.date_and_time }} was {{ train.late }} minutes late when it was approaching {{ train.nextstop }}.  </li> 
+ going to {{ train.destination }} on {{ train.date_and_time }} was {{ train.late }} minute{{ train.late|pluralize }} late when it was approaching {{ train.nextstop }}.  </li> 
 
         {% endfor %}
     </ul>
