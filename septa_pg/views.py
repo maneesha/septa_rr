@@ -21,30 +21,30 @@ def search_x(request):
 
 def search(request):
     #is this the best way to have multiple search terms?
-    if 'q' in request.GET and request.GET['q']:
-        q = request.GET['q'] #q is the search term
-        w = request.GET['w'] #w is the field name       
-        x = request.GET['x'] #x is filter type
-        query1 = w + x
-        kwargs = {query1:q}   
-        a = request.GET['a'] #a is the search term
-        b = request.GET['b'] #b is the field name
-        c = request.GET['c'] #c is the filter type
-        query2 = b + c  
+    if 'search_term_1' in request.GET and request.GET['search_term_1']:
+        search_term_1 = request.GET['search_term_1'] 
+        field_name_1 = request.GET['field_name_1']      
+        filter_type_1 = request.GET['filter_type_1'] 
+        query1 = field_name_1 + filter_type_1
+        kwargs = {query1:search_term_1}   
+        search_term_2 = request.GET['search_term_2'] #a is the search term
+        field_name_2 = request.GET['field_name_2'] #b is the field name
+        filter_type_2 = request.GET['filter_type_2'] #c is the filter type
+        query2 = field_name_2 + filter_type_2  
         #if a second search term was submitted, add it to kwargs        
-        if a:
-            kwargs[query2]  = a
+        if search_term_2:
+            kwargs[query2]  = search_term_2
         trains = Trains.objects.filter(**kwargs).order_by('trainno', 'date_and_time')
         #__icontains and __istartswith are case-insensitive (compare to _contains & _startswith) 
         plain_english = {'__icontains':'contains', '__gt':'greater than', '__lt':'less than', '__istartswith':'starts with', '__exact':'equals'}        
-        return render(request, 'search_results.html', {'trains':trains, 'query1':q, 'field1':w, 'filter1':plain_english[x], 'query2':a, 'field2':b, 'filter2':plain_english[c]})
-    elif 'zz' in request.GET and request.GET['zz']:
+        return render(request, 'search_results.html', {'trains':trains, 'query1':search_term_1, 'field1':field_name_1, 'filter1':plain_english[filter_type_1], 'query2':search_term_2, 'field2':field_name_2, 'filter2':plain_english[filter_type_2]})
+    elif 'train_number_search' in request.GET and request.GET['train_number_search']:
         #return HttpResponse("You searched for: %r" % request.GET['zz'])
-        zz = request.GET['zz']
-        trainno_filter = Trains.objects.filter(trainno__exact=zz)
+        train_number_search = request.GET['train_number_search']
+        trainno_filter = Trains.objects.filter(trainno__exact=train_number_search)
         latest_train = trainno_filter.aggregate(Max('late'))
         lt = latest_train['late__max']
-        return render(request, 'late_results.html', {'latest_train':latest_train, 'lt':lt, 'trainno':zz})
+        return render(request, 'late_results.html', {'latest_train':latest_train, 'lt':lt, 'trainno':train_number_search})
     #testing passing date submission
     elif 'start_date' in request.GET and request.GET['start_date']:
         start_date = request.GET['start_date']
