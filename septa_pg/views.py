@@ -27,9 +27,9 @@ def search(request):
         filter_type_1 = request.GET['filter_type_1'] 
         query1 = field_name_1 + filter_type_1
         kwargs = {query1:search_term_1}   
-        search_term_2 = request.GET['search_term_2'] #a is the search term
-        field_name_2 = request.GET['field_name_2'] #b is the field name
-        filter_type_2 = request.GET['filter_type_2'] #c is the filter type
+        search_term_2 = request.GET['search_term_2'] 
+        field_name_2 = request.GET['field_name_2'] 
+        filter_type_2 = request.GET['filter_type_2'] 
         query2 = field_name_2 + filter_type_2  
         #if a second search term was submitted, add it to kwargs        
         if search_term_2:
@@ -39,13 +39,12 @@ def search(request):
         plain_english = {'__icontains':'contains', '__gt':'greater than', '__lt':'less than', '__istartswith':'starts with', '__exact':'equals'}        
         return render(request, 'search_results.html', {'trains':trains, 'query1':search_term_1, 'field1':field_name_1, 'filter1':plain_english[filter_type_1], 'query2':search_term_2, 'field2':field_name_2, 'filter2':plain_english[filter_type_2]})
     elif 'train_number_search' in request.GET and request.GET['train_number_search']:
-        #return HttpResponse("You searched for: %r" % request.GET['zz'])
         train_number_search = request.GET['train_number_search']
         trainno_filter = Trains.objects.filter(trainno__exact=train_number_search)
         latest_train = trainno_filter.aggregate(Max('late'))
         lt = latest_train['late__max']
         return render(request, 'late_results.html', {'latest_train':latest_train, 'lt':lt, 'trainno':train_number_search})
-    #testing passing date submission
+    #testing passing date submission - dates pass correctly but not yet functional part of app
     elif 'start_date' in request.GET and request.GET['start_date']:
         start_date = request.GET['start_date']
         end_date = request.GET['end_date']
@@ -53,7 +52,11 @@ def search(request):
             message = "You searched for the start date " + start_date + " and the end date " + end_date
         else:
             message = "End date must be after start date."
-        return HttpResponse(message)
+        #return HttpResponse(message)
+        trains_that_day = Trains.objects.filter(date_and_time__exact = start_date)
+        return render(request, 'date_results.html', {'start_date':start_date, 'trains_that_day':trains_that_day})
+
+
     else:
         return HttpResponse("Please submit a search term") #suggestion: bring this to top so it doesn't get lost 
 
