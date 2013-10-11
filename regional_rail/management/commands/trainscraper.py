@@ -16,7 +16,6 @@ class Command(BaseCommand):
         #identify url 
         url = "http://www3.septa.org/hackathon/TrainView/"
 
-
         #get the scraped date & time since that's not part of the json feed
         scraped_date = str(datetime.date(datetime.now())) 
         scraped_time = str(datetime.time(datetime.now()))

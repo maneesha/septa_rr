@@ -34,7 +34,7 @@ def search(request):
         #if a second search term was submitted, add it to kwargs        
         if a:
             kwargs[query2]  = a
-        trains = Trains.objects.filter(**kwargs).order_by('date_and_time', 'trainno')
+        trains = Trains.objects.filter(**kwargs).order_by('trainno', 'date_and_time')
         #__icontains and __istartswith are case-insensitive (compare to _contains & _startswith) 
         plain_english = {'__icontains':'contains', '__gt':'greater than', '__lt':'less than', '__istartswith':'starts with', '__exact':'equals'}        
         return render(request, 'search_results.html', {'trains':trains, 'query1':q, 'field1':w, 'filter1':plain_english[x], 'query2':a, 'field2':b, 'filter2':plain_english[c]})
