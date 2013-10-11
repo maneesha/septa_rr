@@ -1,4 +1,6 @@
 /septa_pg/settings.py
+/regional_rail/management/commands/my_settings.py
+
 
 **/*.pyc
 **/*.py~
