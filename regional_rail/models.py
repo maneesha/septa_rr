@@ -12,6 +12,8 @@ class Trains(models.Model):
     scraped_time = models.CharField(max_length = 50) #does not work if TimeField even if septa_django_rr.py sets up as date field
     lon = models.FloatField()
     date_and_time = models.DateTimeField()
+    scr_date = models.DateField()
+    scr_time = models.TimeField()
 
     def __unicode__(self):
         return u'%d %s %s %s %s %s %s %s %s %s' % (self.late, self.destination, self.scraped_date, self.nextstop, self.service, self.source, self.lat, self.trainno, self.scraped_time, self.lon)

@@ -20,7 +20,11 @@ class Command(BaseCommand):
         scraped_date = str(datetime.date(datetime.now())) 
         scraped_time = str(datetime.time(datetime.now()))
         d_and_t = datetime.utcnow().replace(tzinfo=utc)
+        scr_date = datetime.utcnow().replace(tzinfo=utc)
+        scr_time = datetime.utcnow().replace(tzinfo=utc)
         print d_and_t
+        print scr_date
+        print scr_time
 
         try:
 
@@ -33,6 +37,8 @@ class Command(BaseCommand):
                 train["scraped_date"] = scraped_date
                 train["scraped_time"] = scraped_time
                 train["date_and_time"] = d_and_t
+                train["scr_date"] = scr_date
+                train["scr_time"] = scr_time
 
                 #scrapedtrain is based on the Trains model defined in models.py    
                 #scraped train is an object based on class regional_rail.models.Trains
@@ -52,6 +58,8 @@ class Command(BaseCommand):
                 scrapedtrain.scraped_time = train["scraped_time"]
                 scrapedtrain.scraped_date = train["scraped_date"]
                 scrapedtrain.date_and_time = train["date_and_time"]
+                scrapedtrain.scr_date = train["scr_date"]
+                scrapedtrain.scr_time = train["scr_time"]
 
                 #Saves to database as defined in django settings
                 scrapedtrain.save()

@@ -48,13 +48,14 @@ def search(request):
     elif 'start_date' in request.GET and request.GET['start_date']:
         start_date = request.GET['start_date']
         end_date = request.GET['end_date']
+        print "**************************", type(start_date)
         if start_date < end_date:
             message = "You searched for the start date " + start_date + " and the end date " + end_date
         else:
             message = "End date must be after start date."
         #return HttpResponse(message)
-        trains_that_day = Trains.objects.filter(date_and_time__exact = start_date)
-        return render(request, 'date_results.html', {'start_date':start_date, 'trains_that_day':trains_that_day})
+        trains_that_day = Trains.objects.filter(date_and_time__range = [start_date, end_date])
+        return render(request, 'date_results.html', {'start_date':start_date, 'end_date':end_date, 'trains_that_day':trains_that_day})
 
 
     else:
