@@ -4,6 +4,7 @@ from django.shortcuts import render
 #from django.template import Context
 from regional_rail.models import Trains
 from django.db.models import Max
+from datetime import timedelta
 
 def search_form(request):
     return render(request, 'search_form.html')
@@ -48,7 +49,13 @@ def search(request):
     elif 'start_date' in request.GET and request.GET['start_date']:
         start_date = request.GET['start_date']
         end_date = request.GET['end_date']
-        print "**************************", type(start_date)
+        print "**************************"
+        print "original start date: ", start_date
+        #start_date_plus1 = start_date + timedelta(days =1)
+        #print "edited start date: ", start_date_plus1
+        print type(start_date)
+        #print type(start_date_plus1)
+        print "***********************"
         if start_date < end_date:
             message = "You searched for the start date " + start_date + " and the end date " + end_date
         else:
