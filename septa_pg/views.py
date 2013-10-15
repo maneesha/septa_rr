@@ -22,12 +22,15 @@ def search_x(request):
 
 def search(request):
     #is this the best way to have multiple search terms?
-    start_date = date(1900, 1, 1)
-    end_date = date(2013, 10, 10)
-    kwargs = {[start_date, end_date]:'date_and_time__range'}
+    #start_date = date(1900, 1, 1)
+    #end_date = date(2015, 12, 31)
+    #kwargs = {(start_date, end_date):'date_and_time__range'}
+    start_date = '1900-01-01'
+    end_date = "2020-12-31"
+
 
     #testing passing date submission - dates pass correctly but not yet functional part of app
-    if 'start_date' in request.GET and request.GET['start_date']:
+    if 'start_date' in request.GET and request.GET['start_date'] and len('start_date') > 1:
         start_date = request.GET['start_date']
         end_date = request.GET['end_date']
         print "**************************"
@@ -53,7 +56,8 @@ def search(request):
         field_name_1 = request.GET['field_name_1']      
         filter_type_1 = request.GET['filter_type_1'] 
         query1 = field_name_1 + filter_type_1
-        kwargs[query1] = search_term_1   
+        kwargs = {query1:search_term_1}
+        #kwargs[query1] = search_term_1
         search_term_2 = request.GET['search_term_2'] 
         field_name_2 = request.GET['field_name_2'] 
         filter_type_2 = request.GET['filter_type_2'] 
@@ -61,7 +65,8 @@ def search(request):
         #if a second search term was submitted, add it to kwargs        
         if search_term_2:
             kwargs[query2]  = search_term_2
-        trains = Trains.objects.filter(**kwargs).order_by('trainno', 'date_and_time')
+        trains = Trains.objects.filter(date_and_time__range = [start_date, end_date])
+        trains = trains.filter(**kwargs).order_by('trainno', 'date_and_time')
         #__icontains and __istartswith are case-insensitive (compare to _contains & _startswith) 
         plain_english = {'__icontains':'contains', '__gt':'greater than', '__lt':'less than', '__istartswith':'starts with', '__exact':'equals'}        
         return render(request, 'search_results.html', {'trains':trains, 'query1':search_term_1, 'field1':field_name_1, 'filter1':plain_english[filter_type_1], 'query2':search_term_2, 'field2':field_name_2, 'filter2':plain_english[filter_type_2], 'start_date': start_date, 'end_date':end_date})

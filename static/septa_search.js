@@ -35,5 +35,5 @@ $(function() {
 
 
   $(function() {
-    $( ".datepicker" ).datepicker({minDate: new Date(2013, 4-1, 01), maxDate: '0', dateFormat: "yy-mm-dd" });
+    $( ".datepicker" ).datepicker({minDate: new Date(2013, 4-1, 01), maxDate: '0', dateFormat: "yy-mm-dd", defaultDate: '04-01-2013'});
   });
