@@ -1,30 +1,46 @@
+<html>
+
+<head>
+<link rel = "stylesheet" type = "text/css" href = "/static/styling.css">
+
+</head>
 
 
-You searched for:
 
- Start date: {{ start_date }}
- <br>
- End date: {{ end_date }}
- <br>
- Train number: {{ train_number_search }}
+<body>
+
+
+<br>You searched for:
+
+<br><br>
+Start date: {{ start_date }}
 <br>
+End date: {{ end_date }}
+<br>
+Train number: {{ train_number_search }}
+<br><br>
 
-
+<a href = '/search-form'>Return to search page</a>
+<br><br>
 
 {% if latest_train %}
 
     {% if latest_train_minutes == 0 %}
-    This train was never late during this date range.
+        This train was never late during this date range.
 
     {% else %}
 
-    Train number {{ train_number_search }} was {{ latest_train_minutes }} minutes late on DATE TO BE FILLED IN.
+        Train number {{ train_number_search }} has run {{ latest_train_minutes }} minutes late, most recently on {{ latest_train_date }}.
+
+<!--     Or I could stick a for loop in here and make this list all instances of that max lateness. -->
 
     {% endif %}
     
 {% else %}
 
-No trains with that number found during this date range.
+    No trains with that number found during this date range.
 
 {% endif %}
 
+</body>
+</html>

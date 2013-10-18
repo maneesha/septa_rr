@@ -68,7 +68,7 @@ def search(request):
         #create django queryset called latest_train that filters all data by specified date range
         latest_train = Trains.objects.filter(date_and_time__range = [start_date, end_date])
 
-        #filter this data by trains matching specified train number
+        #filter this data by trains matching specified train number, returning another django queryset
         latest_train = latest_train.filter(trainno__exact = train_number_search)
 
         #########
@@ -80,8 +80,13 @@ def search(request):
         #get just the value from that object
         latest_train_minutes = latest_train_minutes['late__max']
 
+        latest_train_date = latest_train.filter(late__exact = latest_train_minutes)
+        latest_train_date = latest_train_date.aggregate(Max('date_and_time'))
+        latest_train_date = latest_train_date['date_and_time__max']
 
-        return render (request, 'late_results.html', {'latest_train':latest_train, 'latest_train_minutes':latest_train_minutes, 'train_number_search': train_number_search, 'start_date':start_date, 'end_date':end_date})
+
+
+        return render (request, 'late_results.html', {'latest_train':latest_train, 'latest_train_minutes':latest_train_minutes, 'train_number_search': train_number_search, 'start_date':start_date, 'end_date':end_date, 'latest_train_date': latest_train_date})
 
 
     else:
