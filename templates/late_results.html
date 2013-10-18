@@ -1,11 +1,30 @@
-You searched for the term {{ trainno }}
-<p>
 
-<p>
+
+You searched for:
+
+ Start date: {{ start_date }}
+ <br>
+ End date: {{ end_date }}
+ <br>
+ Train number: {{ train_number_search }}
+<br>
+
+
+
 {% if latest_train %}
 
-The latest that train number {{ trainno }} ran during this time period was {{ lt }} minutes.
+    {% if latest_train_minutes == 0 %}
+    This train was never late during this date range.
 
+    {% else %}
+
+    Train number {{ train_number_search }} was {{ latest_train_minutes }} minutes late on DATE TO BE FILLED IN.
+
+    {% endif %}
+    
 {% else %}
-Found no trains
+
+No trains with that number found during this date range.
+
 {% endif %}
+
