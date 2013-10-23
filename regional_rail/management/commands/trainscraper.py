@@ -17,6 +17,7 @@ class Command(BaseCommand):
         url = "http://www3.septa.org/hackathon/TrainView/"
 
         #get the scraped date & time since that's not part of the json feed
+        #IF NO INTERNET CONNECTION, HOW TO GET DATE & TIME??  GETS SYSTEM TIME BUT TIMEZONE PART DOES NOT WORK??
         scraped_date = str(datetime.date(datetime.now())) 
         scraped_time = str(datetime.time(datetime.now()))
         d_and_t = datetime.utcnow().replace(tzinfo=utc)
