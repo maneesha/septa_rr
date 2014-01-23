@@ -17,15 +17,13 @@ class Command(BaseCommand):
         url = "http://www3.septa.org/hackathon/TrainView/"
 
         #get the scraped date & time since that's not part of the json feed
+
         #IF NO INTERNET CONNECTION, HOW TO GET DATE & TIME??  GETS SYSTEM TIME BUT TIMEZONE PART DOES NOT WORK??
-        scraped_date = str(datetime.date(datetime.now())) 
-        scraped_time = str(datetime.time(datetime.now()))
-        d_and_t = datetime.utcnow().replace(tzinfo=utc)
-        scr_date = datetime.utcnow().replace(tzinfo=utc)
-        scr_time = datetime.utcnow().replace(tzinfo=utc)
-        print d_and_t
-        print scr_date
-        print scr_time
+        scraped_date = datetime.date(datetime.now()) 
+        scraped_time = datetime.time(datetime.now())
+        
+        ## Below: the timezone thing that I don't know if I need or how to work        
+        ## x = datetime.utcnow().replace(tzinfo=utc)
 
         try:
 
@@ -37,10 +35,7 @@ class Command(BaseCommand):
                 #complete the data set by adding date / time 
                 train["scraped_date"] = scraped_date
                 train["scraped_time"] = scraped_time
-                train["date_and_time"] = d_and_t
-                train["scr_date"] = scr_date
-                train["scr_time"] = scr_time
-
+               
                 #scrapedtrain is based on the Trains model defined in models.py    
                 #scraped train is an object based on class regional_rail.models.Trains
                 scrapedtrain = Trains()
@@ -58,9 +53,6 @@ class Command(BaseCommand):
                 scrapedtrain.nextstop = train["nextstop"]
                 scrapedtrain.scraped_time = train["scraped_time"]
                 scrapedtrain.scraped_date = train["scraped_date"]
-                scrapedtrain.date_and_time = train["date_and_time"]
-                scrapedtrain.scr_date = train["scr_date"]
-                scrapedtrain.scr_time = train["scr_time"]
 
                 #Saves to database as defined in django settings
                 scrapedtrain.save()
@@ -70,8 +62,9 @@ class Command(BaseCommand):
             conn = psycopg2.connect(database = my_settings.db, user = my_settings.user, host = my_settings.host)
             c = conn.cursor()
             e = "Conn/Data Error"
-            error_log = (e, e, 9999, 9999, 9999, e, e, e, scraped_time, scraped_date, d_and_t)
-            query = "INSERT INTO regional_rail_trains (destination, source, late, lat, lon, trainno, service, nextstop, scraped_time, scraped_date, date_and_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            #error_log = (e, e, 9999, 9999, 9999, e, e, e, scraped_time, scraped_date, e, e, e)
+            error_log = (e, e, 9999, 9999, 9999, e, e, e, e, e, scraped_time, scraped_date)
+            query = "INSERT INTO regional_rail_trains (destination, source, late, lat, lon, trainno, service, nextstop, scraped_time, scraped_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
             c.execute(query, error_log)
             conn.commit()
             c.close()
