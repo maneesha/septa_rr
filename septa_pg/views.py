@@ -51,10 +51,10 @@ def search(request):
             kwargs[query2]  = search_term_2
 
         #create django queryset called trains that filters all data by specified date range
-        trains = Trains.objects.filter(date_and_time__range = [start_date, end_date])
+        trains = Trains.objects.filter(scraped_date__range = [start_date, end_date])
 
         #filter this queryset based on user search terms
-        trains = trains.filter(**kwargs).order_by('trainno', 'date_and_time')
+        trains = trains.filter(**kwargs).order_by('trainno', 'scraped_date')
 
         #dictionary to convert search types from plain english to django
         #__icontains and __istartswith are case-insensitive (compare to _contains & _startswith) 
@@ -66,7 +66,7 @@ def search(request):
         train_number_search = request.GET['train_number_search']
         
         #create django queryset called latest_train that filters all data by specified date range
-        latest_train = Trains.objects.filter(date_and_time__range = [start_date, end_date])
+        latest_train = Trains.objects.filter(scraped_date__range = [start_date, end_date])
 
         #filter this data by trains matching specified train number, returning another django queryset
         latest_train = latest_train.filter(trainno__exact = train_number_search)
@@ -81,8 +81,8 @@ def search(request):
         latest_train_minutes = latest_train_minutes['late__max']
 
         latest_train_date = latest_train.filter(late__exact = latest_train_minutes)
-        latest_train_date = latest_train_date.aggregate(Max('date_and_time'))
-        latest_train_date = latest_train_date['date_and_time__max']
+        latest_train_date = latest_train_date.aggregate(Max('scraped_date'))
+        latest_train_date = latest_train_date['scraped_date__max']
 
 
 
