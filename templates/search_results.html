@@ -29,7 +29,7 @@ AND
     <p> Found {{ trains|length }} train{{ trains|pluralize }}.</p>
     <ul>
         {% for train in trains %}
-            <li>  Train number {{ train.trainno }} from  {{ train.source }}, going to {{ train.destination }} on {{ train.date_and_time }} was {{ train.late }} minute{{ train.late|pluralize }} late when it was approaching {{ train.nextstop }}.  </li> 
+            <li>  Train number {{ train.trainno }} from  {{ train.source }}, going to {{ train.destination }} at {{ train.scraped_time }} on {{ train.scraped_date }} was {{ train.late }} minute{{ train.late|pluralize }} late when it was approaching {{ train.nextstop }}.  </li> 
 
         {% endfor %}
     </ul>
