@@ -3,13 +3,13 @@ from django.db import models
 class Trains(models.Model):
     late = models.IntegerField()
     destination = models.CharField(max_length = 100)
-    scraped_date = models.DateField()
+    scraped_date = models.CharField(max_length = 50)
     nextstop = models.CharField(max_length = 100)
     service = models.CharField(max_length = 100)
     source = models.CharField(max_length = 100)
     lat = models.FloatField()
     trainno = models.CharField(max_length = 15)
-    scraped_time = models.TimeField() 
+    scraped_time = models.CharField(max_length = 50)
     lon = models.FloatField()
 
     def __unicode__(self):

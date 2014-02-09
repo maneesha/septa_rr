@@ -19,25 +19,32 @@ class Command(BaseCommand):
         #get the scraped date & time since that's not part of the json feed
 
         #IF NO INTERNET CONNECTION, HOW TO GET DATE & TIME??  GETS SYSTEM TIME BUT TIMEZONE PART DOES NOT WORK??
-        scraped_date = datetime.date(datetime.now()) 
-        scraped_time = datetime.time(datetime.now())
+        scraped_date = str(datetime.date(datetime.now())) 
+        scraped_time = str(datetime.time(datetime.now()))
+        print scraped_date
+        print scraped_time
+
         
         ## Below: the timezone thing that I don't know if I need or how to work        
         ## x = datetime.utcnow().replace(tzinfo=utc)
 
         try:
+            print 'trying the scraper'
 
-            #current_trains will be a list of dictionaries
-            #each dictionary is one currently running train
-            current_trains = json.load(urllib2.urlopen(url))         
+            # #current_trains will be a list of dictionaries
+            # #each dictionary is one currently running train
+            current_trains = json.load(urllib2.urlopen(url))
+            print current_trains         
 
             for train in current_trains:
                 #complete the data set by adding date / time 
                 train["scraped_date"] = scraped_date
                 train["scraped_time"] = scraped_time
-               
+                       
+                #In a try/except -- does it try as far as it can and then jump to the except?
+
                 #scrapedtrain is based on the Trains model defined in models.py    
-                #scraped train is an object based on class regional_rail.models.Trains
+                #scrapedtrain is an object based on class regional_rail.models.Trains
                 scrapedtrain = Trains()
 
                 #There is probably an easier & shorter way to do this.
