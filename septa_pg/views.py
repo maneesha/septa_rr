@@ -30,6 +30,7 @@ def search(request):
     #user input to modify dates 
         start_date = request.GET['start_date']
         end_date = request.GET['end_date']
+        #just for testing... message is not actually used anywhere
         if start_date < end_date:
             message = "You searched for the start date " + start_date + " and the end date " + end_date
         else:
@@ -37,6 +38,7 @@ def search(request):
 
     if 'search_term_1' in request.GET and request.GET['search_term_1']:
     #user input to search all trains by lateness, source, destination, and/or next stop
+    #search for search_term_1 in field_name_1 using filter_type_1
         search_term_1 = request.GET['search_term_1'] 
         field_name_1 = request.GET['field_name_1']      
         filter_type_1 = request.GET['filter_type_1'] 
@@ -60,6 +62,8 @@ def search(request):
         #__icontains and __istartswith are case-insensitive (compare to _contains & _startswith) 
         plain_english = {'__icontains':'contains', '__gt':'greater than', '__lt':'less than', '__istartswith':'starts with', '__exact':'equals'}        
         
+
+        #render parameters: request, html template for results, dictionary of all parameters being passed
         return render(request, 'search_results.html', {'trains':trains, 'query1':search_term_1, 'field1':field_name_1, 'filter1':plain_english[filter_type_1], 'query2':search_term_2, 'field2':field_name_2, 'filter2':plain_english[filter_type_2], 'start_date': start_date, 'end_date':end_date})
    
     elif 'train_number_search' in request.GET and request.GET['train_number_search']:
